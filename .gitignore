@@ -1,0 +1,95 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Composer
+composer.lock
+
+# IDE & Editor Files
+.vscode/
+.idea/
+*.sublime-*
+*.swp
+*.swo
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+
+# Testing & Coverage
+.phpunit.result.cache
+/coverage/
+/build/
+/var/
+/.phpunit.cache
+
+# Environment Files  
+.env
+.env.local
+.env.*.local
+
+# Laravel/PHP Specific
+/bootstrap/compiled.php
+/storage/logs/*.log
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/app/public/storage
+
+# Package Development
+/.php_cs.cache
+/.php-cs-fixer.cache
+/.psalm/
+/psalm.xml
+
+# Documentation Build
+/docs/build/
+/docs/.vuepress/dist/
+
+# Temporary Files
+*.tmp
+*.temp
+*.log
+*.cache
+
+# PHPStorm
+/.idea/
+*.iml
+
+# VS Code
+/.vscode/
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*~
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Backup files
+*.orig
+*.bak
+
+# Other
+.sass-cache/
+npm-debug.log
+yarn-error.log
+.yarn-integrity
+
+# Package-specific
+/scripts/integrate-test.sh.bak
