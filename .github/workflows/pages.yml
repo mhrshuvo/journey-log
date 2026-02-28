@@ -4,8 +4,6 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: [ main, github-pages-documentation ]
-  pull_request:
-    branches: [ main, github-pages-documentation ]
 
 permissions:
   contents: read
@@ -28,6 +26,8 @@ jobs:
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        with:
+          enablement: true
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
