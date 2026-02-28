@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JourneyLog - Laravel User Journey Tracking</title>
+    <meta name="description" content="Track user behavior across your Laravel application with organized JSON logs and built-in analytics dashboard">
+    <link rel="stylesheet" href="assets/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛤️</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <span class="logo-icon">🛤️</span>
+                    <span class="logo-text">JourneyLog</span>
+                </div>
+                <nav class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#installation">Installation</a>
+                    <a href="#usage">Usage</a>
+                    <a href="#examples">Examples</a>
+                    <a href="https://github.com/mhrshuvo/journey-log" class="github-link">GitHub</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Track User Journeys in 
+                    <span class="gradient-text">Laravel</span>
+                </h1>
+                <p class="hero-description">
+                    Automatic user journey logging with organized JSON storage, built-in analytics dashboard, and zero-config installation. Perfect for understanding user flows and debugging customer issues.
+                </p>
+                <div class="hero-actions">
+                    <a href="#installation" class="btn btn-primary">Get Started</a>
+                    <a href="https://github.com/mhrshuvo/journey-log" class="btn btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        View on GitHub
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">10/10</div>
+                        <div class="stat-label">Tests Passing</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">Laravel 10-12</div>
+                        <div class="stat-label">Compatibility</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">Zero Config</div>
+                        <div class="stat-label">Installation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose JourneyLog?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Automatic Tracking</h3>
+                    <p>Zero-config middleware automatically tracks user journeys across your entire Laravel application.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📁</div>
+                    <h3>Organized Storage</h3>
+                    <p>JSON logs are automatically organized by action type and date for easy analysis and debugging.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Built-in Dashboard</h3>
+                    <p>Beautiful analytics dashboard with timeline views to visualize user journey flows.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Custom Journey IDs</h3>
+                    <p>Support for custom journey identifiers via headers and sessions for flexible tracking.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧹</div>
+                    <h3>Auto Cleanup</h3>
+                    <p>Configurable automatic cleanup of old log files to keep your storage optimized.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>High Performance</h3>
+                    <p>Lightweight design with minimal impact on your application's performance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="installation" class="installation">
+        <div class="container">
+            <h2 class="section-title">Quick Installation</h2>
+            <div class="installation-content">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Install via Composer</h3>
+                        <div class="code-block">
+                            <pre><code class="language-bash">composer require mhrshuvo/journey-log</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Add Middleware</h3>
+                        <div class="code-block">
+                            <pre><code class="language-php">// In bootstrap/app.php (Laravel 11)
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->web(append: ['journey-log']);
+})</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Start Tracking!</h3>
+                        <div class="code-block">
+                            <pre><code class="language-php">// Automatic tracking is now enabled
+// Custom logging:
+journey_log('purchase', 'User completed purchase', [
+    'product_id' => 123,
+    'amount' => 99.99
+]);</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usage Examples -->
+    <section id="usage" class="usage">
+        <div class="container">
+            <h2 class="section-title">Usage Examples</h2>
+            <div class="usage-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-button active" data-tab="basic">Basic Usage</button>
+                    <button class="tab-button" data-tab="api">API Tracking</button>
+                    <button class="tab-button" data-tab="dashboard">Dashboard</button>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-panel active" id="basic">
+                        <div class="code-block">
+                            <pre><code class="language-php">// Automatic journey tracking
+Route::middleware(['journey-log'])->group(function () {
+    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::post('/search', [SearchController::class, 'search']);
+});
+
+// Custom journey logging
+journey_log('search', 'User searched for products', [
+    'query' => 'laptop',
+    'filters' => ['brand' => 'apple'],
+    'results_count' => 25
+]);
+
+journey_log('checkout', 'User completed checkout', [
+    'total_amount' => 1299.99,
+    'payment_method' => 'credit_card',
+    'items_count' => 3
+]);</code></pre>
+                        </div>
+                    </div>
+                    <div class="tab-panel" id="api">
+                        <div class="code-block">
+                            <pre><code class="language-bash"># API requests with custom journey ID
+curl -H "X-Journey-ID: user-abc123" \
+     https://yourapp.com/api/products
+
+# Journey persists across API calls
+curl -H "X-Journey-ID: user-abc123" \
+     -X POST https://yourapp.com/api/cart/add \
+     -d '{"product_id": 123}'
+
+# View logs organized by journey ID
+ls storage/logs/journeys/
+# └── api_request/
+#     ├── journey-user-abc123.json
+#     └── journey-guest-xyz789.json</code></pre>
+                        </div>
+                    </div>
+                    <div class="tab-panel" id="dashboard">
+                        <div class="code-block">
+                            <pre><code class="language-php">// Enable dashboard in .env
+JOURNEY_LOG_SUMMARY_ENABLED=true
+
+// Visit dashboard
+https://yourapp.com/journey-log
+
+// Configure cleanup
+JOURNEY_LOG_AUTO_CLEANUP_ENABLED=true
+JOURNEY_LOG_CLEANUP_RETENTION_HOURS=24
+
+// Manual cleanup
+php artisan journey-log:cleanup --dry-run</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section id="examples" class="examples">
+        <div class="container">
+            <h2 class="section-title">Log Structure Example</h2>
+            <div class="example-content">
+                <div class="example-description">
+                    <h3>Organized & Structured</h3>
+                    <p>Journey logs are automatically organized by action type and contain comprehensive metadata for analysis.</p>
+                    <ul>
+                        <li>Timestamp and journey ID tracking</li>
+                        <li>Request context (URL, method, IP)</li>
+                        <li>Custom data fields</li>
+                        <li>Automatic directory organization</li>
+                    </ul>
+                </div>
+                <div class="example-code">
+                    <div class="code-block">
+                        <pre><code class="language-json">{
+  "message": "User completed purchase",
+  "context": {
+    "product_id": 123,
+    "amount": 99.99,
+    "payment_method": "credit_card",
+    "timestamp": "2026-03-01T10:30:45Z"
+  },
+  "level": 200,
+  "level_name": "INFO",
+  "channel": "journey",
+  "datetime": "2026-03-01T10:30:45+00:00",
+  "extra": {
+    "url": "https://yourapp.com/checkout",
+    "method": "POST",
+    "ip": "192.168.1.100",
+    "user_agent": "Mozilla/5.0...",
+    "session_id": "abc123..."
+  }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <span class="logo-icon">🛤️</span>
+                        <span class="logo-text">JourneyLog</span>
+                    </div>
+                    <p>Track user journeys in Laravel with organized JSON logs and built-in analytics.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="#installation">Installation</a></li>
+                        <li><a href="#usage">Usage Guide</a></li>
+                        <li><a href="https://github.com/mhrshuvo/journey-log/blob/main/README.md">Full Documentation</a></li>
+                        <li><a href="https://github.com/mhrshuvo/journey-log/blob/main/TESTING.md">Testing Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://github.com/mhrshuvo/journey-log">GitHub Repository</a></li>
+                        <li><a href="https://github.com/mhrshuvo/journey-log/issues">Report Issues</a></li>
+                        <li><a href="https://packagist.org/packages/mhrshuvo/journey-log">Packagist</a></li>
+                        <li><a href="https://github.com/mhrshuvo/journey-log/blob/main/LICENSE">MIT License</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <ul>
+                        <li>Laravel 10.x, 11.x, 12.x</li>
+                        <li>PHP 8.1+ Compatible</li>
+                        <li>Zero Configuration</li>
+                        <li>100% Test Coverage</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 JourneyLog. MIT License. Built with ❤️ for Laravel developers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-bash.min.js"></script>
+    <script src="assets/script.js"></script>
+</body>
+</html>

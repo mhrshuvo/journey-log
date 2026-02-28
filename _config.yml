@@ -1,0 +1,39 @@
+# GitHub Pages Configuration
+# This file enables GitHub Pages for the repository
+
+# Source settings
+source: docs
+branch: main
+
+# Jekyll settings (optional - GitHub Pages runs Jekyll by default)
+plugins:
+  - jekyll-default-layout
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-titles-from-headings
+
+# Markdown settings
+markdown: kramdown
+highlighter: rouge
+
+# Site metadata
+title: "JourneyLog - Laravel User Journey Tracking"
+description: "Track user behavior across your Laravel application with organized JSON logs and built-in analytics dashboard"
+url: "https://mhrshuvo.github.io"
+baseurl: "/journey-log"
+
+# GitHub repository info
+repository: "mhrshuvo/journey-log"
+
+# Exclude files from processing
+exclude:
+  - vendor/
+  - README.md
+  - composer.json
+  - composer.lock
+  - phpunit.xml
+  - tests/
+  - .gitignore
+  - .git/
+  - node_modules/
+  - "*.log"
