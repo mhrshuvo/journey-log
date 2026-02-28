@@ -3,9 +3,9 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, github-pages-documentation ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, github-pages-documentation ]
 
 permissions:
   contents: read
