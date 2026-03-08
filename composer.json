@@ -3,7 +3,7 @@
     "description": "JSON based folder-wise user journey logger for Laravel applications. Track user behavior with organized JSON logs and built-in analytics dashboard.",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "keywords": [
         "laravel", 
         "logging", 
