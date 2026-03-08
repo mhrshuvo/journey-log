@@ -38,7 +38,7 @@
                     <span class="gradient-text">Laravel</span>
                 </h1>
                 <p class="hero-description">
-                    Automatic user journey logging with organized JSON storage, built-in analytics dashboard, and zero-config installation. Perfect for understanding user flows and debugging customer issues.
+                    Automatic user journey logging with organized JSON storage, data masking for sensitive information, built-in analytics dashboard, and zero-config installation. Perfect for understanding user flows and debugging customer issues.
                 </p>
                 <div class="hero-actions">
                     <a href="#installation" class="btn btn-primary">Get Started</a>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="hero-stats">
                     <div class="stat">
-                        <div class="stat-number">10/10</div>
+                        <div class="stat-number">15/15</div>
                         <div class="stat-label">Tests Passing</div>
                     </div>
                     <div class="stat">
@@ -96,6 +96,11 @@
                     <div class="feature-icon">🧹</div>
                     <h3>Auto Cleanup</h3>
                     <p>Configurable automatic cleanup of old log files to keep your storage optimized.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Data Masking</h3>
+                    <p>Automatically mask sensitive data like passwords, API keys, and credit card numbers in logs.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">⚡</div>
@@ -157,6 +162,7 @@ journey_log('purchase', 'User completed purchase', [
             <div class="usage-tabs">
                 <div class="tab-buttons">
                     <button class="tab-button active" data-tab="basic">Basic Usage</button>
+                    <button class="tab-button" data-tab="security">Data Masking</button>
                     <button class="tab-button" data-tab="api">API Tracking</button>
                     <button class="tab-button" data-tab="dashboard">Dashboard</button>
                 </div>
@@ -182,6 +188,43 @@ journey_log('checkout', 'User completed checkout', [
     'payment_method' => 'credit_card',
     'items_count' => 3
 ]);</code></pre>
+                        </div>
+                    </div>
+                    <div class="tab-panel" id="security">
+                        <div class="code-block">
+                            <pre><code class="language-php">// Sensitive data masking (automatic)
+journey_log('payment', 'Processing payment', [
+    'user_id' => 123,
+    'amount' => 99.99,
+    'card_number' => '1234-5678-9012-3456',  // Automatically masked
+    'cvv' => '123',                          // Automatically masked
+    'api_key' => 'sk_live_abc123xyz',        // Automatically masked
+    'transaction_id' => 'txn_456789'         // Remains visible
+]);
+
+// Logged output (sensitive data protected)
+{
+  "message": "Processing payment",
+  "context": {
+    "user_id": 123,
+    "amount": 99.99,
+    "card_number": "********",
+    "cvv": "********",
+    "api_key": "********",
+    "transaction_id": "txn_456789"
+  }
+}
+
+// Default masked fields:
+// password, password_confirmation, cvv, card_number,
+// api_key, auth_token, access_token, secret
+
+// Customize in config/journeylog.php
+'mask_fields' => [
+    'password',
+    'ssn',              // Add custom field
+    'bank_account',     // Add custom field
+]</code></pre>
                         </div>
                     </div>
                     <div class="tab-panel" id="api">
@@ -229,13 +272,14 @@ php artisan journey-log:cleanup --dry-run</code></pre>
             <h2 class="section-title">Log Structure Example</h2>
             <div class="example-content">
                 <div class="example-description">
-                    <h3>Organized & Structured</h3>
-                    <p>Journey logs are automatically organized by action type and contain comprehensive metadata for analysis.</p>
+                    <h3>Organized & Secured</h3>
+                    <p>Journey logs are automatically organized by action type and contain comprehensive metadata for analysis, with sensitive data automatically protected.</p>
                     <ul>
                         <li>Timestamp and journey ID tracking</li>
                         <li>Request context (URL, method, IP)</li>
-                        <li>Custom data fields</li>
+                        <li>Custom data fields with masking</li>
                         <li>Automatic directory organization</li>
+                        <li>Built-in data security protection</li>
                     </ul>
                 </div>
                 <div class="example-code">
