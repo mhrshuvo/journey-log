@@ -33,4 +33,21 @@ return [
 
     'auto_cleanup_enabled' => env('JOURNEY_LOG_AUTO_CLEANUP_ENABLED', true),
     'cleanup_retention_hours' => env('JOURNEY_LOG_CLEANUP_RETENTION_HOURS', 1),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global Masking
+    |--------------------------------------------------------------------------
+    | Any keys listed here will have their values replaced with '*' in the logs.
+    */
+    'mask_fields' => [
+        'password',
+        'password_confirmation',
+        'cvv',
+        'card_number',
+        'api_key',
+        'auth_token',
+        'access_token',
+        'secret',
+    ],
 ];

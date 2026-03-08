@@ -131,6 +131,130 @@ class JourneyLogTest extends TestCase
         $this->assertEquals('header-id-456', $response->json('journey_id'));
     }
 
+    public function test_mask_sensitive_data_function(): void
+    {
+        $data = [
+            'username' => 'testuser',
+            'password' => 'secret123',
+            'api_key' => 'abc123xyz',
+            'safe_field' => 'public_info',
+            'nested' => [
+                'card_number' => '1234-5678-9012-3456',
+                'public_data' => 'visible'
+            ]
+        ];
+
+        $maskedData = mask_sensitive_data($data, ['password', 'api_key', 'card_number']);
+
+        $this->assertEquals('testuser', $maskedData['username']);
+        $this->assertEquals('********', $maskedData['password']);
+        $this->assertEquals('********', $maskedData['api_key']);
+        $this->assertEquals('public_info', $maskedData['safe_field']);
+        $this->assertEquals('********', $maskedData['nested']['card_number']);
+        $this->assertEquals('visible', $maskedData['nested']['public_data']);
+    }
+
+    public function test_mask_sensitive_data_case_insensitive(): void
+    {
+        $data = [
+            'PASSWORD' => 'secret123',
+            'Api_Key' => 'abc123xyz',
+            'card_NUMBER' => '1234567890'
+        ];
+
+        $maskedData = mask_sensitive_data($data, ['password', 'api_key', 'card_number']);
+
+        $this->assertEquals('********', $maskedData['PASSWORD']);
+        $this->assertEquals('********', $maskedData['Api_Key']);
+        $this->assertEquals('********', $maskedData['card_NUMBER']);
+    }
+
+    public function test_journey_log_masks_sensitive_data(): void
+    {
+        // Override config for this test
+        config(['journeylog.mask_fields' => ['password', 'cvv']]);
+
+        session(['journey_id' => 'masking-test']);
+
+        journey_log('payment', 'Payment attempt', [
+            'user_id' => 123,
+            'password' => 'secretpass',
+            'cvv' => '123',
+            'amount' => 99.99
+        ]);
+
+        $filePath = storage_path('logs/journeys/payment/journey-masking-test.json');
+        $this->assertFileExists($filePath);
+
+        $content = file_get_contents($filePath);
+        $decoded = json_decode($content, true);
+        $entry = $decoded[0];
+
+        // Sensitive data should be masked
+        $this->assertEquals('********', $entry['context']['password']);
+        $this->assertEquals('********', $entry['context']['cvv']);
+        
+        // Non-sensitive data should remain
+        $this->assertEquals(123, $entry['context']['user_id']);
+        $this->assertEquals(99.99, $entry['context']['amount']);
+    }
+
+    public function test_journey_log_masks_nested_sensitive_data(): void
+    {
+        config(['journeylog.mask_fields' => ['api_key', 'secret']]);
+
+        session(['journey_id' => 'nested-masking-test']);
+
+        journey_log('api', 'API call', [
+            'endpoint' => '/users',
+            'auth' => [
+                'api_key' => 'super-secret-key',
+                'user_id' => 456
+            ],
+            'config' => [
+                'settings' => [
+                    'secret' => 'deep-nested-secret'
+                ]
+            ]
+        ]);
+
+        $filePath = storage_path('logs/journeys/api/journey-nested-masking-test.json');
+        $this->assertFileExists($filePath);
+
+        $content = file_get_contents($filePath);
+        $decoded = json_decode($content, true);
+        $entry = $decoded[0];
+
+        // Check nested masking
+        $this->assertEquals('********', $entry['context']['auth']['api_key']);
+        $this->assertEquals('********', $entry['context']['config']['settings']['secret']);
+        
+        // Non-sensitive nested data should remain
+        $this->assertEquals(456, $entry['context']['auth']['user_id']);
+        $this->assertEquals('/users', $entry['context']['endpoint']);
+    }
+
+    public function test_journey_log_with_empty_mask_fields(): void
+    {
+        config(['journeylog.mask_fields' => []]);
+
+        session(['journey_id' => 'no-masking-test']);
+
+        journey_log('test', 'No masking test', [
+            'password' => 'should-not-be-masked',
+            'api_key' => 'should-not-be-masked'
+        ]);
+
+        $filePath = storage_path('logs/journeys/test/journey-no-masking-test.json');
+        $content = file_get_contents($filePath);
+        $decoded = json_decode($content, true);
+        $entry = $decoded[0];
+
+        // No masking should occur when mask_fields is empty
+        $this->assertEquals('should-not-be-masked', $entry['context']['password']);
+        $this->assertEquals('should-not-be-masked', $entry['context']['api_key']);
+    }
+
     public function test_log_output_is_valid_json(): void
     {
         session(['journey_id' => 'json-test']);

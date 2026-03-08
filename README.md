@@ -96,6 +96,100 @@ JOURNEY_LOG_AUTO_CLEANUP_ENABLED=true
 JOURNEY_LOG_CLEANUP_RETENTION_HOURS=1
 ```
 
+### Data Masking
+
+Protect sensitive information by automatically masking specified field names in your logs. The package includes built-in protection for common sensitive fields and allows customization.
+
+#### Default Protected Fields
+The following fields are automatically masked by default:
+- `password`
+- `password_confirmation` 
+- `cvv`
+- `card_number`
+- `api_key`
+- `auth_token`
+- `access_token`
+- `secret`
+
+#### Usage Example
+```php
+// Original data with sensitive information
+journey_log('payment', 'Processing payment', [
+    'user_id' => 123,
+    'amount' => 99.99,
+    'card_number' => '1234-5678-9012-3456',  // Will be masked
+    'cvv' => '123',                          // Will be masked
+    'api_key' => 'sk_live_abc123xyz',        // Will be masked
+    'transaction_id' => 'txn_456789'         // Will remain visible
+]);
+```
+
+#### Generated Log Output
+```json
+[
+  {
+    "message": "Processing payment",
+    "context": {
+      "user_id": 123,
+      "amount": 99.99,
+      "card_number": "********",
+      "cvv": "********", 
+      "api_key": "********",
+      "transaction_id": "txn_456789"
+    },
+    "level": 200,
+    "level_name": "INFO",
+    "channel": "journey",
+    "datetime": "2026-03-08T10:30:15+00:00",
+    "extra": []
+  }
+]
+```
+
+#### Nested Data Masking
+Masking works recursively through nested arrays:
+```php
+journey_log('auth', 'User login attempt', [
+    'user_data' => [
+        'email' => 'user@example.com',
+        'credentials' => [
+            'password' => 'supersecret123',     // Will be masked
+            'remember_token' => 'abc123'
+        ]
+    ],
+    'request_info' => [
+        'ip' => '192.168.1.1',
+        'headers' => [
+            'authorization' => 'Bearer secret'  // Will remain (not in mask_fields)
+        ]
+    ]
+]);
+```
+
+#### Customizing Masked Fields
+You can customize which fields are masked by modifying the configuration:
+
+**config/journeylog.php:**
+```php
+'mask_fields' => [
+    'password',
+    'password_confirmation',
+    'cvv',
+    'card_number',
+    'api_key',
+    'auth_token',
+    'access_token', 
+    'secret',
+    'ssn',              // Add custom sensitive field
+    'bank_account',     // Add custom sensitive field
+]
+```
+
+#### Case-Insensitive Matching
+Field matching is case-insensitive, so all of these would be masked:
+- `password`, `PASSWORD`, `Password`, `PaSsWoRd`
+- `api_key`, `API_KEY`, `Api_Key`
+
 ## Usage
 
 ### Basic Logging

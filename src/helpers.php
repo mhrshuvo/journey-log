@@ -2,10 +2,29 @@
 
 use Illuminate\Support\Facades\Context;
 
+/**
+ * Recursively mask sensitive keys in an array.
+ */
+function mask_sensitive_data(array $data, array $fieldsToMask)
+{
+    foreach ($data as $key => $value) {
+        if (is_array($value)) {
+            $data[$key] = mask_sensitive_data($value, $fieldsToMask);
+        } elseif (in_array(strtolower($key), array_map('strtolower', $fieldsToMask))) {
+            $data[$key] = '********';
+        }
+    }
+    return $data;
+}
+
 if (! function_exists('journey_log')) {
     function journey_log(?string $folder, string $message, array $data = [])
     {
         $config = config('journeylog');
+
+        // Apply global masking for sensitive data
+        $maskFields = $config['mask_fields'] ?? [];
+        $safeData = mask_sensitive_data($data, $maskFields);
 
         $sessionKey = $config['session_key'] ?? 'journey_id';
         $header = $config['header'] ?? 'X-Journey-ID';
@@ -29,7 +48,7 @@ if (! function_exists('journey_log')) {
                     \Log::warning('JourneyLog: Could not create directory', [
                         'path' => dirname($filePath),
                         'message' => $message,
-                        'data' => $data,
+                        'data' => $safeData,
                     ]);
 
                     return;
@@ -48,7 +67,7 @@ if (! function_exists('journey_log')) {
 
             $entries[] = [
                 'message' => $message,
-                'context' => $data,
+                'context' => $safeData,
                 'level' => 200,
                 'level_name' => 'INFO',
                 'channel' => 'journey',
@@ -62,7 +81,7 @@ if (! function_exists('journey_log')) {
                 \Log::warning('JourneyLog: Could not write to journey log file', [
                     'path' => $filePath,
                     'message' => $message,
-                    'data' => $data,
+                    'data' => $safeData,
                 ]);
 
                 return;
@@ -74,7 +93,7 @@ if (! function_exists('journey_log')) {
             \Log::error('JourneyLog encountered an error', [
                 'error' => $e->getMessage(),
                 'message' => $message,
-                'data' => $data,
+                'data' => $safeData,
             ]);
         }
     }
