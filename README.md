@@ -1,6 +1,17 @@
 # JourneyLog Laravel Package
 
-Track user behavior across your Laravel application with organized JSON logs.
+JourneyLog is the "Black Box" for your Laravel application. Designed specifically for high-stakes industries like Flight, Bus, and Hotel Reservations or Dropshipping, it creates a secure, organized, and session-isolated audit trail of every user interaction and 3rd-party API response.
+
+**Stop digging through massive, messy log files. Start seeing the full story of every booking.**
+
+## 🌟 Why JourneyLog?
+
+In reservation systems, 3rd-party APIs (GDS, Wholesalers, Suppliers) change prices and availability in milliseconds. When a customer claims a price mismatch or a booking fails, you need evidence.
+
+- **Session Isolation**: Every visitor gets their own unique JSON log file. No mixed data.
+- **Folder-Wise Logic**: Automatically group logs into categories like `/search`, `/api-responses`, or `/bookings`.
+- **Hybrid Ready**: Works seamlessly with Web (Sessions) and Stateless APIs (Headers).
+- **Security First**: Built-in Global Masking recursively hides sensitive PII (passwords, API keys, tokens).
 
 ## Installation
 
